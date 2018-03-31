@@ -9,8 +9,7 @@ pipeline {
     stage('Prep') {
       steps {
         sh '''gem install bundler
-bundle install
-docker kill $(docker ps -q)'''
+bundle install'''
         catchError() {
           sh 'docker kill $(docker ps -q)'
         }

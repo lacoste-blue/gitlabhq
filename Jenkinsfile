@@ -11,6 +11,10 @@ pipeline {
         sh '''gem install bundler
 bundle install
 docker kill $(docker ps -q)'''
+        catchError() {
+          sh 'docker kill $(docker ps -q)'
+        }
+        
       }
     }
     stage('Verify') {

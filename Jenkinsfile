@@ -9,7 +9,8 @@ pipeline {
     stage('Prep') {
       steps {
         sh '''gem install bundler
-bundle install'''
+bundle install
+docker kill $(docker ps -q)'''
       }
     }
     stage('Verify') {
@@ -38,7 +39,9 @@ bundle install'''
         }
         stage('Unit') {
           steps {
-            sh '  bundle exec rspec'
+            sh '''  
+docker run -dt -e POSTGRES_DB=gitlabhq_test -p 5432:5432 postgres:9
+bundle exec rspec'''
             script {
               publishHTML(target: [
                 allowMissing: false,
@@ -90,6 +93,11 @@ bundle install'''
             
           }
         }
+      }
+    }
+    stage('Kill') {
+      steps {
+        sh 'docker kill $(docker ps -q)'
       }
     }
   }

@@ -315,6 +315,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'rubycritic'
   gem 'bullet', '~> 5.5.0', require: !!ENV['ENABLE_BULLET']
   gem 'pry-byebug', '~> 3.4.1', platform: :mri
   gem 'pry-rails', '~> 0.3.4'
